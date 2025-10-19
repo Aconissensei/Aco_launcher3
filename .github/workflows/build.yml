@@ -5,12 +5,11 @@ on:
     branches: [ master ]
 
 jobs:
-  # 1. Crée ou met à jour la release GitHub
   create-release:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v2
 
       - name: Get version
         run: echo "version=$(jq -r .version package.json)" >> $GITHUB_ENV
@@ -26,25 +25,25 @@ jobs:
           draft: false
           prerelease: ${{ contains(env.version, 'beta') || contains(env.version, 'alpha') }}
 
-  # 2. Build sur Windows, Linux, macOS
   build-launcher:
     needs: create-release
     runs-on: ${{ matrix.os }}
+
     strategy:
       matrix:
         os: [macos-14, ubuntu-latest, windows-latest]
 
     steps:
       - name: Check out Git repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v1
 
       - name: Set up Node
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@v3
         with:
           node-version: 18.x
 
       - name: Set up Python
-        uses: actions/setup-python@v5
+        uses: actions/setup-python@v4
         with:
           python-version: 3.x
 
@@ -54,31 +53,6 @@ jobs:
 
       - name: Build
         env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GH_TOKEN: ${{ secrets.github_token }}
         run: npm run build
         shell: bash
-
-      # 👉 AJOUT : upload des builds comme artifacts
-      - name: Upload build artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: launcher-${{ matrix.os }}
-          path: dist/**/*
-          if-no-files-found: error
-
-  # 3. Attache les artifacts à la release
-  upload-to-release:
-    needs: build-launcher
-    runs-on: ubuntu-latest
-    steps:
-      - name: Download all build artifacts
-        uses: actions/download-artifact@v4
-        with:
-          path: artifacts
-
-      - name: Upload to GitHub Release
-        uses: softprops/action-gh-release@v2
-        with:
-          files: artifacts/**/* 
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
