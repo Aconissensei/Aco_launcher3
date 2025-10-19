@@ -5,8 +5,8 @@
     "description": "Launcher Mincraft pour le serveur CobbleMyst",
     "main": "src/app.js",
     "author": {
-        "name": "Aconis",
-        "email": "aco131220",
+        "name": "luuxis, Aconis",
+        "email": "discord aco131220",
         "url": "https://github.com/Aconissensei/Aco_launcher"
     },
     "url": "http://217.145.72.53/launcher",
