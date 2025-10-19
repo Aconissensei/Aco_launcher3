@@ -5,7 +5,7 @@ const nodeFetch = require("node-fetch");
 const png2icons = require("png2icons");
 const Jimp = require("jimp");
 
-// Lecture de ton package.json
+// Lecture de package.json
 const pkg = require("./package.json");
 const productName = pkg.productName || "CobbleMyst";
 const appId = (pkg.build && pkg.build.appId) || "com.cobblemyst.launcher";
@@ -16,9 +16,7 @@ class Index {
     this.Fileslist = [];
 
     process.argv.forEach(async (val) => {
-      if (val.startsWith("--icon")) {
-        return this.iconSet(val.split("=")[1]);
-      }
+      if (val.startsWith("--icon")) return this.iconSet(val.split("=")[1]);
 
       if (val.startsWith("--obf")) {
         this.obf = JSON.parse(val.split("=")[1]);
@@ -51,9 +49,7 @@ class Index {
             optionsPreset: "medium-obfuscation",
             disableConsoleOutput: false,
           });
-          fs.writeFileSync(`${folder}/${fileName}`, obf.getObfuscatedCode(), {
-            encoding: "utf-8",
-          });
+          fs.writeFileSync(`${folder}/${fileName}`, obf.getObfuscatedCode(), { encoding: "utf-8" });
         } else {
           console.log(`Copy ${path}`);
           fs.writeFileSync(`${folder}/${fileName}`, code, { encoding: "utf-8" });
@@ -77,25 +73,19 @@ class Index {
           artifactName: "${productName}-${os}-${arch}.${ext}",
           extraMetadata: { main: "app/app.js" },
           files: ["app/**/*", "package.json", "LICENSE"],
-          directories: {
-            output: "dist",
-          },
+          directories: { output: "dist" },
           compression: "normal",
           asar: true,
-          electronDownload: {
-            cache: "./node_modules/.cache/electron",
-          },
+          electronDownload: { cache: "./node_modules/.cache/electron" },
           nodeGypRebuild: false,
           npmRebuild: true,
 
+          // 🔒 Empêche toute tentative de publication depuis electron-builder
+          publish: "never",
+
           win: {
             icon: "./app/assets/images/icon.ico",
-            target: [
-              {
-                target: "nsis",
-                arch: "x64",
-              },
-            ],
+            target: [{ target: "nsis", arch: "x64" }],
           },
           nsis: {
             oneClick: true,
@@ -127,18 +117,11 @@ class Index {
           },
           linux: {
             icon: "./app/assets/images/icon.png",
-            target: [
-              {
-                target: "AppImage",
-                arch: "x64",
-              },
-            ],
+            target: [{ target: "AppImage", arch: "x64" }],
           },
         },
       })
-      .then(() => {
-        console.log("✅ Le build est terminé !");
-      })
+      .then(() => console.log("✅ Le build est terminé !"))
       .catch((err) => {
         console.error("❌ Erreur pendant le build :", err);
         process.exit(1);
@@ -164,14 +147,8 @@ class Index {
       Buffer = await Buffer.buffer();
       const image = await Jimp.read(Buffer);
       Buffer = await image.resize(256, 256).getBufferAsync(Jimp.MIME_PNG);
-      fs.writeFileSync(
-        "src/assets/images/icon.icns",
-        png2icons.createICNS(Buffer, png2icons.BILINEAR, 0)
-      );
-      fs.writeFileSync(
-        "src/assets/images/icon.ico",
-        png2icons.createICO(Buffer, png2icons.HERMITE, 0, false)
-      );
+      fs.writeFileSync("src/assets/images/icon.icns", png2icons.createICNS(Buffer, png2icons.BILINEAR, 0));
+      fs.writeFileSync("src/assets/images/icon.ico", png2icons.createICO(Buffer, png2icons.HERMITE, 0, false));
       fs.writeFileSync("src/assets/images/icon.png", Buffer);
       console.log("🎨 Nouvelle icône générée");
     } else {
