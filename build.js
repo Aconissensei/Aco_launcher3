@@ -62,8 +62,12 @@ class Index {
   async buildPlatform() {
     await this.Obfuscate();
 
+    // IMPORTANT:
+    // - publish: 'never' ici (option top-level) => n'upload RIEN
+    // - config.publish (provider github) => génère app-update.yml pour electron-updater
     builder
       .build({
+        publish: "never",
         config: {
           generateUpdatesFilesForAllChannels: false,
           appId,
@@ -79,8 +83,10 @@ class Index {
           nodeGypRebuild: false,
           npmRebuild: true,
 
-          // ✅ Fix : désactive complètement la publication
-          publish: null,
+          // <<< nécessaire pour app-update.yml (auto-updates)
+          publish: [
+            { provider: "github", owner: "Aconissensei", repo: "Aco_launcher3" }
+          ],
 
           win: {
             icon: "./app/assets/images/icon.ico",
