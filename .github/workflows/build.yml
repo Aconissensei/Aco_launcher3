@@ -18,7 +18,7 @@ jobs:
       - name: Create/Update Release
         uses: softprops/action-gh-release@v2
         with:
-          tag_name: ${{ steps.get_version.outputs.version }}   # ex: 1.2.4
+          tag_name: ${{ steps.get_version.outputs.version }}
           name: release ${{ steps.get_version.outputs.version }}
           draft: false
         env:
@@ -32,17 +32,35 @@ jobs:
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v4
+
       - uses: actions/setup-node@v4
         with:
           node-version: 20
+
+      # Nécessaire pour AppImage sur Ubuntu 24.04+
+      - name: Install libfuse for AppImage (Linux only)
+        if: matrix.os == 'ubuntu-latest'
+        run: |
+          set -e
+          sudo apt-get update
+          if apt-cache show libfuse2t64 >/dev/null 2>&1; then
+            sudo apt-get install -y libfuse2t64
+          else
+            sudo apt-get install -y libfuse2
+          fi
+
       - name: Install deps
         run: npm ci
 
-      # ⚠️ construit ton app (PAS de publish ici)
-      - name: Build app
-        run: npm run build
+      # Build sans publication
+      - name: Build app (silent on Windows)
+        run: |
+          if [ "${{ matrix.os }}" = "windows-latest" ]; then
+            npm run build:ci
+          else
+            npm run build
+          fi
 
-      # On garde ce que le build a produit dans ./dist/
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:

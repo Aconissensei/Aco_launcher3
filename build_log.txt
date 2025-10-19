@@ -1,0 +1,29 @@
+Obfuscate src/app.js
+Obfuscate src/assets/js/index.js
+Obfuscate src/assets/js/launcher.js
+Obfuscate src/assets/js/panels/home.js
+Obfuscate src/assets/js/panels/login.js
+Obfuscate src/assets/js/panels/settings.js
+Obfuscate src/assets/js/utils/config.js
+Obfuscate src/assets/js/utils/database.js
+Obfuscate src/assets/js/utils/logger.js
+Obfuscate src/assets/js/utils/popup.js
+Obfuscate src/assets/js/utils/Skin/skin2D.js
+Obfuscate src/assets/js/utils/Skin/table.js
+Obfuscate src/assets/js/utils/skin.js
+Obfuscate src/assets/js/utils/slider.js
+Obfuscate src/assets/js/utils.js
+Obfuscate src/assets/js/windows/mainWindow.js
+Obfuscate src/assets/js/windows/updateWindow.js
+  • electron-builder  version=26.0.12 os=10.0.26100
+  • loaded configuration  file=package.json ("build" field)
+  • executing @electron/rebuild  electronVersion=30.5.1 arch=x64 buildFromSource=false appDir=./
+  • installing native dependencies  arch=x64
+  • preparing       moduleName=sqlite3 arch=x64
+  • finished        moduleName=sqlite3 arch=x64
+  • completed installing native dependencies
+  • packaging       platform=win32 arch=x64 electron=30.5.1 appOutDir=dist\win-unpacked
+  • downloading     url=https://github.com/electron/electron/releases/download/v30.5.1/electron-v30.5.1-win32-x64.zip size=109 MB parts=8
+  • downloaded      url=https://github.com/electron/electron/releases/download/v30.5.1/electron-v30.5.1-win32-x64.zip duration=2.613s
+  • canceling       signal=terminated
+^C

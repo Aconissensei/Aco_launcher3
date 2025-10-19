@@ -1,7 +1,7 @@
 {
   "name": "CobbleMyst",
   "productName": "CobbleMyst",
-  "version": "1.2.4",
+  "version": "3.0.0",
   "description": "Launcher Minecraft pour le serveur CobbleMyst",
   "main": "src/app.js",
   "author": {
@@ -13,13 +13,14 @@
     "type": "git",
     "url": "git+https://github.com/Aconissensei/Aco_launcher3.git"
   },
-  "scripts": {
-    "start": "cross-env-shell NODE_ENV=dev electron .",
-    "dev": "cross-env-shell DEV_TOOL=open nodemon --exec npm start",
-    "build": "node build.js --obf=true --build=platform",
-    "icon": "node build.js --icon=https://i.imgur.com/9aHlKus.png",
-    "release": "electron-builder -mwl --publish always"
-  },
+"scripts": {
+  "start": "cross-env-shell NODE_ENV=dev electron .",
+  "dev": "cross-env-shell DEV_TOOL=open nodemon --exec npm start",
+  "build": "node build.js --obf=true --build=platform",
+  "build:ci": "node build.js --obf=true --build=platform > build_log.txt 2>&1",
+  "icon": "node build.js --icon=https://i.imgur.com/9aHlKus.png"
+
+},
   "license": "CCANC",
   "nodemonConfig": {
     "ext": "js,html,css",
