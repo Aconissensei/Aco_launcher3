@@ -8,8 +8,8 @@ const nodeFetch = require("node-fetch");
 const convert = require('xml-js');
 let url = pkg.user ? `${pkg.url}/${pkg.user}` : pkg.url
 
-let config = `${url}/launcher/config-launcher/config.json`;
-let news = `${url}/launcher/news-launcher/news.json`;
+let config = `http://217.145.72.53/launcher/launcher/config-launcher/config.json`;
+let news = `http://217.145.72.53/launcher/new_launcher/news2.json`;
 
 class Config {
     GetConfig() {
