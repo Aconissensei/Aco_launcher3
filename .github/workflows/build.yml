@@ -4,6 +4,7 @@ on:
     branches: [ master ]
 
 jobs:
+  # 1) Crée/MAJ la release avec le tag = version du package.json
   create-release:
     runs-on: ubuntu-latest
     outputs:
@@ -24,6 +25,7 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+  # 2) Build sur chaque OS (sans publication)
   build-launcher:
     needs: create-release
     strategy:
@@ -37,7 +39,7 @@ jobs:
         with:
           node-version: 20
 
-      # Nécessaire pour AppImage sur Ubuntu 24.04+
+      # Dépendance requise pour AppImage sur Ubuntu (24.04+)
       - name: Install libfuse for AppImage (Linux only)
         if: matrix.os == 'ubuntu-latest'
         run: |
@@ -52,15 +54,17 @@ jobs:
       - name: Install deps
         run: npm ci
 
-      # Build sans publication
-      - name: Build app (silent on Windows)
-        run: |
-          if [ "${{ matrix.os }}" = "windows-latest" ]; then
-            npm run build:ci
-          else
-            npm run build
-          fi
+      # ---- Build par OS (pas de publish !) ----
+      - name: Build app (Windows)
+        if: matrix.os == 'windows-latest'
+        shell: powershell
+        run: npm run build:ci
 
+      - name: Build app (macOS / Linux)
+        if: matrix.os != 'windows-latest'
+        run: npm run build
+
+      # Garder les fichiers produits dans ./dist/
       - name: Upload artifacts
         uses: actions/upload-artifact@v4
         with:
@@ -68,6 +72,7 @@ jobs:
           path: dist/**/*
           if-no-files-found: error
 
+  # 3) Attache tous les artifacts à la release
   attach-assets:
     needs: [create-release, build-launcher]
     runs-on: ubuntu-latest
