@@ -88,16 +88,6 @@ class Index {
           nodeGypRebuild: false,
           npmRebuild: true,
 
-          // Publication GitHub — lis depuis package.json
-          publish: [
-            {
-              provider: "github",
-              owner: "Aconissensei",
-              repo: "Aco_launcher3",
-              releaseType: "release",
-            },
-          ],
-
           win: {
             icon: "./app/assets/images/icon.ico",
             target: [
