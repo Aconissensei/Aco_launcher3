@@ -1,7 +1,7 @@
 {
   "name": "CobbleMyst",
   "productName": "CobbleMyst",
-  "version": "3.0.3",
+  "version": "3.0.4",
   "description": "Launcher Minecraft pour le serveur CobbleMyst",
   "main": "src/app.js",
   "author": {
@@ -13,6 +13,7 @@
     "type": "git",
     "url": "git+https://github.com/Aconissensei/Aco_launcher3.git"
   },
+"url": "http://217.145.72.53/launcher",
 "scripts": {
   "start": "cross-env-shell NODE_ENV=dev electron .",
   "dev": "cross-env-shell DEV_TOOL=open nodemon --exec npm start",
