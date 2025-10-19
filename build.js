@@ -5,7 +5,6 @@ const nodeFetch = require("node-fetch");
 const png2icons = require("png2icons");
 const Jimp = require("jimp");
 
-// Lecture de package.json
 const pkg = require("./package.json");
 const productName = pkg.productName || "CobbleMyst";
 const appId = (pkg.build && pkg.build.appId) || "com.cobblemyst.launcher";
@@ -80,8 +79,8 @@ class Index {
           nodeGypRebuild: false,
           npmRebuild: true,
 
-          // 🔒 Empêche toute tentative de publication depuis electron-builder
-          publish: "never",
+          // ✅ Fix : désactive complètement la publication
+          publish: null,
 
           win: {
             icon: "./app/assets/images/icon.ico",

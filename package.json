@@ -1,7 +1,7 @@
 {
   "name": "CobbleMyst",
   "productName": "CobbleMyst",
-  "version": "3.0.1",
+  "version": "3.0.2",
   "description": "Launcher Minecraft pour le serveur CobbleMyst",
   "main": "src/app.js",
   "author": {
