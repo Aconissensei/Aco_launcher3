@@ -1,7 +1,7 @@
 {
   "name": "CobbleMyst",
   "productName": "CobbleMyst",
-  "version": "1.2.3",
+  "version": "1.2.4",
   "description": "Launcher Minecraft pour le serveur CobbleMyst",
   "main": "src/app.js",
   "author": {
@@ -42,18 +42,15 @@
     "png2icons": "^2.0.1"
   },
   "build": {
-    "appId": "com.cobblemyst.launcher",
-    "productName": "CobbleMyst",
-    "directories": { "output": "dist" },
-    "files": [
-      "src/**/*",
-      "package.json"
-    ],
-    "mac": { "target": ["dmg","zip"], "category": "public.app-category.games" },
-    "win": { "target": ["nsis"] },
-    "linux": { "target": ["AppImage"], "category": "Game" },
-    "publish": [
-      { "provider": "github", "owner": "Aconissensei", "repo": "Aco_launcher3" }
-    ]
-  }
+  "appId": "com.cobblemyst.launcher",
+  "productName": "CobbleMyst",
+  "directories": { "output": "dist" },
+  "files": [
+    "src/**/*",
+    "package.json"
+  ],
+  "mac": { "target": ["dmg","zip"], "category": "public.app-category.games" },
+  "win": { "target": ["nsis"] },
+  "linux": { "target": ["AppImage"], "category": "Game" }
+}
 }
